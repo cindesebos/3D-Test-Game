@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Zenject;
 using Sources.Gameplay.Economy;
+using Sources.Gameplay.BedsCreator;
 
 namespace Sources.Gameplay
 {
@@ -11,27 +12,31 @@ namespace Sources.Gameplay
         [SerializeField] private BankView _bankView;
         [Space]
 
-        [SerializeField] private BedContainer _bedContainer;
         [SerializeField] private BedView _bedView;
-        [SerializeField] private BedData _bedData;
 
+        private BedData _bedData;
         private Bank _bank;
+        private ICreator _creator;
+        private BedsContainer _bedsContainer;
 
         [Inject]
-        private void Construct(Bank bank)
+        private void Construct(Bank bank, BedData bedData, ICreator creator, BedsContainer bedsContainer)
         {
             _bank = bank;
+            _bedData = bedData;
+            _creator = creator;
+            _bedsContainer = bedsContainer;
         }
         
         private void Awake()
         {
-            _bedContainer.InitBedSlots(_bedData);
+            _bedsContainer.InitBedSlots(_bedData);
 
             _bankView.Init(_bank);
 
-            BedModel bedModel = new BedModel(_bedView, _bedContainer, _bank);
-            BedPresenter bedPresenter = new BedPresenter(bedModel);
-            _bedView.Init(bedPresenter, _bedContainer, _bedData);
+            BedModel bedModel = new BedModel(_bedView, _bedsContainer, _bank);
+            BedPresenter bedPresenter = new BedPresenter(bedModel, _creator);
+            _bedView.Init(bedPresenter, _bedsContainer, _bedData);
         }
     }
 }

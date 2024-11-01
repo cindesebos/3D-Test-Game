@@ -2,7 +2,7 @@ namespace Sources.Gameplay.Economy
 {
     public class Gold : Currency<int>
     {
-        public Gold() => Value.Value = 130;
+        public Gold() => Value.Value = 1300;
 
         public override bool TryAdd(int amount)
         {

@@ -1,13 +1,11 @@
 using UnityEngine;
 using Sources.MVP;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Sources.Gameplay.Beds
 {
     public class BedView : View
     {
-        private BedContainer _bedContainer;
+        private BedsContainer _bedsContainer;
         private BedData _data;
         private Camera _camera;
 
@@ -16,10 +14,10 @@ namespace Sources.Gameplay.Beds
             _camera = Camera.main;
         }
 
-        public void Init(Presenter presenter, BedContainer bedContainer, BedData data)
+        public void Init(Presenter presenter, BedsContainer bedsContainer, BedData data)
         {
             Presenter = presenter;
-            _bedContainer = bedContainer;
+            _bedsContainer = bedsContainer;
             _data = data;
         }
 
@@ -46,7 +44,7 @@ namespace Sources.Gameplay.Beds
 
         public override void SetCarrotsBedMesh(int id)
         {
-            _bedContainer.GetBedSlotById(id).GetComponentInChildren<MeshFilter>().mesh = _data.СarrotsBedMesh;
+            _bedsContainer.GetBedSlotById(id).GetComponentInChildren<MeshFilter>().mesh = _data.СarrotsBedMesh;
         }
     }
 }
