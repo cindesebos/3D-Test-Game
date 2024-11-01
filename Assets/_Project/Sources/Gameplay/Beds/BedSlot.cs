@@ -4,8 +4,13 @@ namespace Sources.Gameplay.Beds
 {
     public class BedSlot : MonoBehaviour
     {
-        [SerializeField] private int _id;
+        public int Id { get; private set; }
+        public int PurchasePrice { get; private set; }
 
-        public int Id => _id;
+        public void Init(int id, BedData data)
+        {
+            Id = id;
+            PurchasePrice = data.PurchasePrice;
+        }
     }
 }

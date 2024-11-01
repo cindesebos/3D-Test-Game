@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 554556aaf9b0fc14c8448fff0b2f808e, type: 3}
   m_Name: BedData
   m_EditorClassIdentifier: 
+  _purchasePrice: 100
   _emptyBedMesh: {fileID: -2432090755550338912, guid: b575ed6f660ab614f8c31888526a1190, type: 3}
   _carrotsBedMesh: {fileID: -2432090755550338912, guid: 94bc7142a4c5c1344987fc870ae9045f, type: 3}

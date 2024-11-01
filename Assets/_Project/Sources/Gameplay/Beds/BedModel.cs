@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Sources.Gameplay.Economy;
 using Sources.MVP;
 using UnityEngine;
 
@@ -9,14 +10,22 @@ namespace Sources.Gameplay.Beds
     {
         private List<bool> _availableSlots = new List<bool>();
 
-        public BedModel(View view, IEnumerable<BedSlot> bedSlots) : base(view)
+        private readonly Bank _bank;
+        private readonly BedContainer _bedContainer;
+
+        public BedModel(View view, BedContainer bedContainer, Bank bank) : base(view)
         {
-            for(int i=0; i<bedSlots.ToList().Count; i++) _availableSlots.Add(true);
+            _bank = bank;
+            _bedContainer = bedContainer;
+
+            for(int i=0; i<_bedContainer.BedSlots.ToList().Count; i++) _availableSlots.Add(true);
         }
 
         public override bool TryBuyBed(int id)
         {
-            if(_availableSlots[id])
+            int bedPrice = _bedContainer.GetBedSlotById(id).PurchasePrice;
+
+            if(_availableSlots[id] && _bank.Gold.TrySpend(bedPrice))
             {
                 View.SetCarrotsBedMesh(id);
 

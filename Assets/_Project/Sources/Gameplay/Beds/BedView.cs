@@ -7,7 +7,7 @@ namespace Sources.Gameplay.Beds
 {
     public class BedView : View
     {
-        private List<BedSlot> _bedSlots;
+        private BedContainer _bedContainer;
         private BedData _data;
         private Camera _camera;
 
@@ -16,10 +16,10 @@ namespace Sources.Gameplay.Beds
             _camera = Camera.main;
         }
 
-        public void Init(Presenter presenter, IEnumerable<BedSlot> bedSlots, BedData data)
+        public void Init(Presenter presenter, BedContainer bedContainer, BedData data)
         {
             Presenter = presenter;
-            _bedSlots = bedSlots.ToList();
+            _bedContainer = bedContainer;
             _data = data;
         }
 
@@ -37,16 +37,16 @@ namespace Sources.Gameplay.Beds
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                if (hit.collider.TryGetComponent(out BedSlot slot))
+                if (hit.collider.TryGetComponent(out BedSlot bedSlot))
                 {
-                    Presenter.OnBedsSlotClicked(slot.Id);
+                    Presenter.OnBedsSlotClicked(bedSlot.Id);
                 }
             }
         }
 
         public override void SetCarrotsBedMesh(int id)
         {
-            _bedSlots[id].GetComponentInChildren<MeshFilter>().mesh = _data.СarrotsBedMesh;
+            _bedContainer.GetBedSlotById(id).GetComponentInChildren<MeshFilter>().mesh = _data.СarrotsBedMesh;
         }
     }
 }
